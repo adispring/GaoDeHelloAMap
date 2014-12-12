@@ -7,16 +7,39 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ViewController.h"
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
+@synthesize window = _window;
+@synthesize viewController = _viewController;
+
+#define START_FROM_XIB
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    // Override point for customization after application launch.
+#ifdef START_FROM_XIB
+    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    NSLog(@"_window: %@",_window);
+#ifdef IPHONE_XIB
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
+    } else {
+#endif
+        _viewController = [[ViewController alloc] initWithNibName:@"pARkViewController_iPad" bundle:nil];
+#ifdef IPHONE_XIB
+    }
+#endif
+    
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
+    NSLog(@"_window after: %@",_window);
+#endif
     return YES;
 }
 

@@ -9,9 +9,8 @@
 #import "ViewController.h"
 #import <MAMapKit/MAMapKit.h>
 #import <AMapSearchKit/AMapSearchAPI.h>
-
+#import <CoreLocation/CoreLocation.h>
 #import "ARView.h"
-#import "PlaceOfInterest.h"
 #define APIKey      @"292a7bf1d4b969e26508683f5447a9c0"
 
 
@@ -26,11 +25,8 @@ UITableViewDataSource, UITableViewDelegate>
     UITableView *_tableView;
     NSArray *_pois;
     NSMutableArray *_annotations;
-//    NSTimer *paintingTimer;
     
 }
-@property (nonatomic, strong) NSTimer *paintingTimer;
-@property (nonatomic, strong) NSTimer *GeoTimer;
 @end
 
 @implementation ViewController
@@ -184,29 +180,11 @@ UITableViewDataSource, UITableViewDelegate>
 {
     NSLog(@"request: %@", request);
     NSLog(@"response: %@", response);
-    ARView *arView = (ARView *)self.view;
+    
     if (response.pois.count > 0) {
-        
         _pois = response.pois;
         [_tableView reloadData];
-        NSMutableArray *placesOfInterest = [NSMutableArray array];
-
-        for (AMapPOI *poigd in _pois) {
-            UILabel *label = [[UILabel alloc] init];
-            label.adjustsFontSizeToFitWidth = NO;
-            label.opaque = NO;
-            label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.5f];
-            label.center = CGPointMake(200.0f, 200.0f);
-            label.textAlignment = UITextAlignmentCenter;
-            label.textColor = [UIColor whiteColor];
-            label.text = poigd.name;
-            CGSize size = [label.text sizeWithFont:label.font];
-            label.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
-            
-            PlaceOfInterest *poi = [PlaceOfInterest placeOfInterestWithView:label at:[[CLLocation alloc] initWithLatitude:poigd.location.latitude longitude:poigd.location.longitude]];
-            [placesOfInterest addObject:poi];
-        }
-        [arView setPlacesOfInterest:placesOfInterest];
+        
         //清空标注
         [_mapView removeAnnotation:_annotations];
         [_annotations removeAllObjects];
@@ -237,35 +215,6 @@ UITableViewDataSource, UITableViewDelegate>
     }
 }
 
-#pragma mark - timer
-
-// 开始定时器
-- (void) startTimer{
-    
-    // 定义一个NSTimer
-    self.paintingTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
-                                                          target:self
-                                                        selector:@selector(searchAction)  userInfo:nil
-                                                         repeats:YES];
-    self.GeoTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                          target:self
-                                                        selector:@selector(reGeoAction)  userInfo:nil
-                                                         repeats:YES];
-}
-
-// 停止定时器
-- (void) stopTimer{
-    if (self.paintingTimer != nil){
-        // 定时器调用invalidate后，就会自动执行release方法。不需要在显示的调用release方法
-        [self.paintingTimer invalidate];
-    }
-    if (self.GeoTimer != nil){
-        // 定时器调用invalidate后，就会自动执行release方法。不需要在显示的调用release方法
-        [self.GeoTimer invalidate];
-    }
-    
-}
-
 
 #pragma mark - life cycle
 
@@ -278,43 +227,6 @@ UITableViewDataSource, UITableViewDelegate>
     [self initTableView];
     [self initAttributes];
     
-    ARView *arView = (ARView *)self.view;
-    
-    // Create array of hard-coded places-of-interest, in this case some famous parks
-    const char *poiNames[] = {"Jinan Railway Station JN",
-        "QingDao Railway Station QD",
-        "韩釜宫（济南店）",
-        "Hyde Park UK",
-        "Mont Royal QC",
-        "Retiro Park ES"};
-    
-    CLLocationCoordinate2D poiCoords[] = {{36.6712, 116.99089000000004},
-        {36.06547, 117.056056},
-        {36.679906, 117.056056},
-        {51.5068670, -0.1708030},
-        {45.5126399, -73.6802448},
-        {40.4152519, -3.6887466}};
-    
-    int numPois = sizeof(poiCoords) / sizeof(CLLocationCoordinate2D);
-    
-    NSMutableArray *placesOfInterest = [NSMutableArray arrayWithCapacity:numPois];
-    for (int i = 0; i < numPois; i++) {
-        UILabel *label = [[UILabel alloc] init];
-        label.adjustsFontSizeToFitWidth = NO;
-        label.opaque = NO;
-        label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.5f];
-        label.center = CGPointMake(200.0f, 200.0f);
-        label.textAlignment = UITextAlignmentCenter;
-        label.textColor = [UIColor whiteColor];
-        label.text = [NSString stringWithCString:poiNames[i] encoding:NSASCIIStringEncoding];
-        CGSize size = [label.text sizeWithFont:label.font];
-        label.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
-        
-        PlaceOfInterest *poi = [PlaceOfInterest placeOfInterestWithView:label at:[[CLLocation alloc] initWithLatitude:poiCoords[i].latitude longitude:poiCoords[i].longitude]];
-        [placesOfInterest insertObject:poi atIndex:i];
-    }
-    [arView setPlacesOfInterest:placesOfInterest];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -322,13 +234,11 @@ UITableViewDataSource, UITableViewDelegate>
     [super viewWillAppear:animated];
     ARView *arView = (ARView *)self.view;
     [arView start];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self startTimer];// 开始定时器
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -341,7 +251,6 @@ UITableViewDataSource, UITableViewDelegate>
     [super viewDidDisappear:animated];
     ARView *arView = (ARView *)self.view;
     [arView stop];
-    [self stopTimer];// 开始定时器
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
