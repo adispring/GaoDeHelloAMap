@@ -55,7 +55,9 @@
 
 @property (nonatomic, strong) NSArray *placesOfInterest;
 
+
 - (void)start;
 - (void)stop;
+- (void)getCurrentLocationFromGaode:(CLLocation *)currentLocation;
 
 @end

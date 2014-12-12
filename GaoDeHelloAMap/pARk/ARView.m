@@ -99,6 +99,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	vec4f_t *placesOfInterestCoordinates;
 }
 
+@property (nonatomic, strong) CLLocation *locationGaode;
+
 - (void)initialize;
 
 - (void)startCameraPreview;
@@ -125,6 +127,10 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 #pragma mark ARView implementation
 
 @implementation ARView
+
+- (void)getCurrentLocationFromGaode:(CLLocation *)currentLocation
+{
+}
 
 @dynamic placesOfInterest;
 
@@ -153,15 +159,16 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	[self stopDisplayLink];
 }
 
-- (void)setPlacesOfInterest:(NSArray *)pois withUserLocation:(PlaceOfInterest *)userLocation
+- (void)setPlacesOfInterest:(NSArray *)pois
 {
 	for (PlaceOfInterest *poi in [placesOfInterest objectEnumerator]) {
 		[poi.view removeFromSuperview];
 	}	
 	
-	placesOfInterest = pois;	
+	placesOfInterest = pois;
+//    location = userLocation;
 	if (location != nil) {
-		[self updatePlacesOfInterestCoordinates];
+        [self updatePlacesOfInterestCoordinates];
 	}
 }
 
@@ -275,7 +282,10 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	displayLink = nil;		
 }
 
-- (void)updatePlacesOfInterestCoordinates:(PlaceOfInterest *)userLocation
+#define LATITUDE_GAODE      36.67825978
+#define LONGTITUDE_GAODE    117.05896659
+
+- (void)updatePlacesOfInterestCoordinates
 {
 	
 	if (placesOfInterestCoordinates != NULL) {
@@ -284,9 +294,13 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	placesOfInterestCoordinates = (vec4f_t *)malloc(sizeof(vec4f_t)*placesOfInterest.count);
 			
 	int i = 0;
-	
+    
+//    location = location_gd;
+//	location = self.locationGaode;
+    
 	double myX, myY, myZ;
-	latLonToEcef(location.coordinate.latitude, location.coordinate.longitude, 0.0, &myX, &myY, &myZ);
+//	latLonToEcef(location.coordinate.latitude, location.coordinate.longitude, 0.0, &myX, &myY, &myZ);
+    latLonToEcef(LATITUDE_GAODE, LONGTITUDE_GAODE, 0.0, &myX, &myY, &myZ);
 
 	// Array of NSData instances, each of which contains a struct with the distance to a POI and the
 	// POI's index into placesOfInterest
@@ -302,7 +316,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 		double poiX, poiY, poiZ, e, n, u;
 		
 		latLonToEcef(poi.location.coordinate.latitude, poi.location.coordinate.longitude, 0.0, &poiX, &poiY, &poiZ);
-		ecefToEnu(location.coordinate.latitude, location.coordinate.longitude, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
+		//ecefToEnu(location.coordinate.latitude, location.coordinate.longitude, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
+        ecefToEnu(LATITUDE_GAODE, LONGTITUDE_GAODE, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
 		
 		placesOfInterestCoordinates[i][0] = (float)n;
 		placesOfInterestCoordinates[i][1]= -(float)e;
@@ -378,6 +393,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 {
 //    location = currentLocation;
 	location = newLocation;
+//    location = self.locationGaode;
+    NSLog(@"ARViewlocation: %@", location);
 	if (placesOfInterest != nil) {
 		[self updatePlacesOfInterestCoordinates];
 	}	

@@ -207,6 +207,11 @@ UITableViewDataSource, UITableViewDelegate>
             [placesOfInterest addObject:poi];
         }
         [arView setPlacesOfInterest:placesOfInterest];
+        
+        NSLog(@"_currentLocation: %@",_currentLocation);
+        
+        [arView getCurrentLocationFromGaode:_currentLocation];
+
         //清空标注
         [_mapView removeAnnotation:_annotations];
         [_annotations removeAllObjects];
@@ -278,6 +283,8 @@ UITableViewDataSource, UITableViewDelegate>
     [self initTableView];
     [self initAttributes];
     
+    [self reGeoAction];
+    
     ARView *arView = (ARView *)self.view;
     
     // Create array of hard-coded places-of-interest, in this case some famous parks
@@ -313,8 +320,12 @@ UITableViewDataSource, UITableViewDelegate>
         PlaceOfInterest *poi = [PlaceOfInterest placeOfInterestWithView:label at:[[CLLocation alloc] initWithLatitude:poiCoords[i].latitude longitude:poiCoords[i].longitude]];
         [placesOfInterest insertObject:poi atIndex:i];
     }
-    [arView setPlacesOfInterest:placesOfInterest];
+//    - (void)setPlacesOfInterest:(NSArray *)pois withUserLocation:(CLLocation *)userLocation
+//    [arView setPlacesOfInterest:placesOfInterest];
     
+    NSLog(@"_currentLocation: %@",_currentLocation);
+    
+//    [arView getCurrentLocationFromGaode:_currentLocation];
 }
 
 - (void)viewWillAppear:(BOOL)animated
