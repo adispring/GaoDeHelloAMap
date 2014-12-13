@@ -22,7 +22,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    // Override point for customization after application launch.
 #ifdef START_FROM_XIB
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     NSLog(@"_window: %@",_window);
@@ -32,6 +31,7 @@
     } else {
 #endif
         _viewController = [[ViewController alloc] initWithNibName:@"pARkViewController_iPad" bundle:nil];
+//        _viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil];
 #ifdef IPHONE_XIB
     }
 #endif

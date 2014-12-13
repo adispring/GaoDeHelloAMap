@@ -19,6 +19,7 @@
 UITableViewDataSource, UITableViewDelegate>
 {
     MAMapView *_mapView;
+    ARView *_arView;
     AMapSearchAPI *_search;
     CLLocation *_currentLocation;
     UIButton *_locationButton;
@@ -197,10 +198,11 @@ UITableViewDataSource, UITableViewDelegate>
             label.opaque = NO;
             label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.5f];
             label.center = CGPointMake(200.0f, 200.0f);
-            label.textAlignment = UITextAlignmentCenter;
+            label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [UIColor whiteColor];
             label.text = poigd.name;
-            CGSize size = [label.text sizeWithFont:label.font];
+//            CGSize size = [label.text sizeWithFont:label.font];
+            CGSize size = [label.text sizeWithAttributes:@ {NSFontAttributeName: label.font}];
             label.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
             
             PlaceOfInterest *poi = [PlaceOfInterest placeOfInterestWithView:label at:[[CLLocation alloc] initWithLatitude:poigd.location.latitude longitude:poigd.location.longitude]];
@@ -213,7 +215,7 @@ UITableViewDataSource, UITableViewDelegate>
         [arView getCurrentLocationFromGaode:_currentLocation];
 
         //清空标注
-        [_mapView removeAnnotation:_annotations];
+        [_mapView removeAnnotation:(id)_annotations];
         [_annotations removeAllObjects];
     }
 }
@@ -285,7 +287,7 @@ UITableViewDataSource, UITableViewDelegate>
     
     [self reGeoAction];
     
-    ARView *arView = (ARView *)self.view;
+//    ARView *arView = (ARView *)self.view;
     
     // Create array of hard-coded places-of-interest, in this case some famous parks
     const char *poiNames[] = {"Jinan Railway Station JN",
@@ -311,10 +313,11 @@ UITableViewDataSource, UITableViewDelegate>
         label.opaque = NO;
         label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.5f];
         label.center = CGPointMake(200.0f, 200.0f);
-        label.textAlignment = UITextAlignmentCenter;
+        label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor whiteColor];
         label.text = [NSString stringWithCString:poiNames[i] encoding:NSASCIIStringEncoding];
-        CGSize size = [label.text sizeWithFont:label.font];
+//        CGSize size = [label.text sizeWithFont:label.font];
+        CGSize size = [label.text sizeWithAttributes:@ {NSFontAttributeName: label.font}];
         label.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
         
         PlaceOfInterest *poi = [PlaceOfInterest placeOfInterestWithView:label at:[[CLLocation alloc] initWithLatitude:poiCoords[i].latitude longitude:poiCoords[i].longitude]];

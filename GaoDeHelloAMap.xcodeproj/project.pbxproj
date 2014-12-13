@@ -12,12 +12,9 @@
 		C92CAE7F1A3AD8560049E76D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92CAE7E1A3AD8560049E76D /* Foundation.framework */; };
 		C92CAE811A3AD86C0049E76D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92CAE801A3AD86C0049E76D /* CoreGraphics.framework */; };
 		C98174641A39F53700590E96 /* GaoDeHelloAMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C98174631A39F53700590E96 /* GaoDeHelloAMapTests.m */; };
-		C983E5461A3B29C000E11716 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C983E5451A3B29C000E11716 /* Default-568h@2x.png */; };
 		C983E5591A3B2B1700E11716 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C983E5491A3B2B1700E11716 /* AppDelegate.m */; };
-		C983E55A1A3B2B1700E11716 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C983E54A1A3B2B1700E11716 /* Main.storyboard */; };
 		C983E55B1A3B2B1700E11716 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C983E54C1A3B2B1700E11716 /* Default-568h@2x.png */; };
 		C983E55C1A3B2B1700E11716 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C983E54D1A3B2B1700E11716 /* Images.xcassets */; };
-		C983E55D1A3B2B1700E11716 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C983E54E1A3B2B1700E11716 /* Info.plist */; };
 		C983E55E1A3B2B1700E11716 /* location_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C983E54F1A3B2B1700E11716 /* location_no@2x.png */; };
 		C983E55F1A3B2B1700E11716 /* location_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C983E5501A3B2B1700E11716 /* location_yes@2x.png */; };
 		C983E5601A3B2B1700E11716 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C983E5511A3B2B1700E11716 /* main.m */; };
@@ -26,6 +23,8 @@
 		C983E5631A3B2B1700E11716 /* pARkViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C983E5571A3B2B1700E11716 /* pARkViewController_iPad.xib */; };
 		C983E5641A3B2B1700E11716 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C983E5581A3B2B1700E11716 /* search@2x.png */; };
 		C983E5671A3B2BD800E11716 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C983E5661A3B2BD800E11716 /* ViewController.m */; };
+		C983E5691A3BCDCA00E11716 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C983E5681A3BCDCA00E11716 /* ViewController_iPad.xib */; };
+		C983E5701A3BF24700E11716 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C983E56F1A3BF24700E11716 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,24 +46,24 @@
 		C981745D1A39F53700590E96 /* GaoDeHelloAMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GaoDeHelloAMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98174621A39F53700590E96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C98174631A39F53700590E96 /* GaoDeHelloAMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GaoDeHelloAMapTests.m; sourceTree = "<group>"; };
-		C983E5451A3B29C000E11716 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		C983E5481A3B2B1700E11716 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		C983E5491A3B2B1700E11716 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C983E54B1A3B2B1700E11716 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C983E54C1A3B2B1700E11716 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C983E5481A3B2B1700E11716 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = GaoDeHelloAMap/AppDelegate.h; sourceTree = "<group>"; };
+		C983E5491A3B2B1700E11716 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = GaoDeHelloAMap/AppDelegate.m; sourceTree = "<group>"; };
+		C983E54C1A3B2B1700E11716 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "GaoDeHelloAMap/Default-568h@2x.png"; sourceTree = "<group>"; };
 		C983E54D1A3B2B1700E11716 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C983E54E1A3B2B1700E11716 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C983E54F1A3B2B1700E11716 /* location_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location_no@2x.png"; sourceTree = "<group>"; };
-		C983E5501A3B2B1700E11716 /* location_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location_yes@2x.png"; sourceTree = "<group>"; };
-		C983E5511A3B2B1700E11716 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C983E54F1A3B2B1700E11716 /* location_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location_no@2x.png"; path = "GaoDeHelloAMap/location_no@2x.png"; sourceTree = "<group>"; };
+		C983E5501A3B2B1700E11716 /* location_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location_yes@2x.png"; path = "GaoDeHelloAMap/location_yes@2x.png"; sourceTree = "<group>"; };
+		C983E5511A3B2B1700E11716 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GaoDeHelloAMap/main.m; sourceTree = "<group>"; };
 		C983E5531A3B2B1700E11716 /* ARView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARView.h; sourceTree = "<group>"; };
 		C983E5541A3B2B1700E11716 /* ARView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARView.m; sourceTree = "<group>"; };
 		C983E5551A3B2B1700E11716 /* PlaceOfInterest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceOfInterest.h; sourceTree = "<group>"; };
 		C983E5561A3B2B1700E11716 /* PlaceOfInterest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceOfInterest.m; sourceTree = "<group>"; };
-		C983E5571A3B2B1700E11716 /* pARkViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = pARkViewController_iPad.xib; sourceTree = "<group>"; };
-		C983E5581A3B2B1700E11716 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
+		C983E5571A3B2B1700E11716 /* pARkViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = pARkViewController_iPad.xib; path = GaoDeHelloAMap/pARkViewController_iPad.xib; sourceTree = "<group>"; };
+		C983E5581A3B2B1700E11716 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "search@2x.png"; path = "GaoDeHelloAMap/search@2x.png"; sourceTree = "<group>"; };
 		C983E5651A3B2BD800E11716 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		C983E5661A3B2BD800E11716 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C983E5681A3BCDCA00E11716 /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = GaoDeHelloAMap/ViewController_iPad.xib; sourceTree = "<group>"; };
+		C983E56A1A3BD6D800E11716 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = GaoDeHelloAMap/Info.plist; sourceTree = "<group>"; };
+		C983E56F1A3BF24700E11716 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E224BECA961CAA0259136F2D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C8BC3CC4A4171852BFC261 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,7 +102,6 @@
 		C981743B1A39F53700590E96 = {
 			isa = PBXGroup;
 			children = (
-				C983E5451A3B29C000E11716 /* Default-568h@2x.png */,
 				C983E5471A3B2B1700E11716 /* GaoDeHelloAMap */,
 				C98174601A39F53700590E96 /* GaoDeHelloAMapTests */,
 				C98174451A39F53700590E96 /* Products */,
@@ -143,18 +141,11 @@
 			children = (
 				C983E5651A3B2BD800E11716 /* ViewController.h */,
 				C983E5661A3B2BD800E11716 /* ViewController.m */,
-				C983E5481A3B2B1700E11716 /* AppDelegate.h */,
-				C983E5491A3B2B1700E11716 /* AppDelegate.m */,
-				C983E54A1A3B2B1700E11716 /* Main.storyboard */,
-				C983E54C1A3B2B1700E11716 /* Default-568h@2x.png */,
+				C983E56F1A3BF24700E11716 /* Main.storyboard */,
 				C983E54D1A3B2B1700E11716 /* Images.xcassets */,
-				C983E54E1A3B2B1700E11716 /* Info.plist */,
-				C983E54F1A3B2B1700E11716 /* location_no@2x.png */,
-				C983E5501A3B2B1700E11716 /* location_yes@2x.png */,
-				C983E5511A3B2B1700E11716 /* main.m */,
+				C983E56C1A3BDB4B00E11716 /* image */,
+				C983E56B1A3BDB2400E11716 /* Supporting Files */,
 				C983E5521A3B2B1700E11716 /* pARk */,
-				C983E5571A3B2B1700E11716 /* pARkViewController_iPad.xib */,
-				C983E5581A3B2B1700E11716 /* search@2x.png */,
 			);
 			path = GaoDeHelloAMap;
 			sourceTree = "<group>";
@@ -168,6 +159,32 @@
 				C983E5561A3B2B1700E11716 /* PlaceOfInterest.m */,
 			);
 			path = pARk;
+			sourceTree = "<group>";
+		};
+		C983E56B1A3BDB2400E11716 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C983E5481A3B2B1700E11716 /* AppDelegate.h */,
+				C983E5491A3B2B1700E11716 /* AppDelegate.m */,
+				C983E5511A3B2B1700E11716 /* main.m */,
+				C983E56A1A3BD6D800E11716 /* Info.plist */,
+				C983E5571A3B2B1700E11716 /* pARkViewController_iPad.xib */,
+				C983E5681A3BCDCA00E11716 /* ViewController_iPad.xib */,
+			);
+			name = "Supporting Files";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		C983E56C1A3BDB4B00E11716 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				C983E54C1A3B2B1700E11716 /* Default-568h@2x.png */,
+				C983E5581A3B2B1700E11716 /* search@2x.png */,
+				C983E5501A3B2B1700E11716 /* location_yes@2x.png */,
+				C983E54F1A3B2B1700E11716 /* location_no@2x.png */,
+			);
+			name = image;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		EAE0A38036FC689F6021BCD3 /* Frameworks */ = {
@@ -265,12 +282,11 @@
 			files = (
 				C983E5641A3B2B1700E11716 /* search@2x.png in Resources */,
 				C983E55F1A3B2B1700E11716 /* location_yes@2x.png in Resources */,
-				C983E5461A3B29C000E11716 /* Default-568h@2x.png in Resources */,
 				C983E55C1A3B2B1700E11716 /* Images.xcassets in Resources */,
+				C983E5701A3BF24700E11716 /* Main.storyboard in Resources */,
 				C983E55E1A3B2B1700E11716 /* location_no@2x.png in Resources */,
-				C983E55A1A3B2B1700E11716 /* Main.storyboard in Resources */,
-				C983E55D1A3B2B1700E11716 /* Info.plist in Resources */,
 				C983E5631A3B2B1700E11716 /* pARkViewController_iPad.xib in Resources */,
+				C983E5691A3BCDCA00E11716 /* ViewController_iPad.xib in Resources */,
 				C983E55B1A3B2B1700E11716 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,17 +363,6 @@
 			targetProxy = C981745E1A39F53700590E96 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		C983E54A1A3B2B1700E11716 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C983E54B1A3B2B1700E11716 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C98174651A39F53700590E96 /* Debug */ = {

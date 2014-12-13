@@ -209,12 +209,6 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
             [captureLayer.connection setVideoOrientation:AVCaptureVideoOrientationPortrait];
         }
     }
-    else
-    {
-        if ([captureLayer isOrientationSupported]) {
-            [captureLayer setOrientation:AVCaptureVideoOrientationPortrait];
-        }
-    }
     [captureLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
 	[captureView.layer addSublayer:captureLayer];
 	
