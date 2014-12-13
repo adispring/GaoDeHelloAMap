@@ -166,9 +166,9 @@
 			children = (
 				C983E5481A3B2B1700E11716 /* AppDelegate.h */,
 				C983E5491A3B2B1700E11716 /* AppDelegate.m */,
-				C983E5511A3B2B1700E11716 /* main.m */,
 				C983E56A1A3BD6D800E11716 /* Info.plist */,
 				C983E5571A3B2B1700E11716 /* pARkViewController_iPad.xib */,
+				C983E5511A3B2B1700E11716 /* main.m */,
 				C983E5681A3BCDCA00E11716 /* ViewController_iPad.xib */,
 			);
 			name = "Supporting Files";

@@ -50,11 +50,15 @@
 #import "ViewController.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <MAMapKit/MAMapKit.h>
+#import <AMapSearchKit/AMapSearchAPI.h>
 
 #pragma mark -
 #pragma mark Math utilities declaration
 
 #define DEGREES_TO_RADIANS (M_PI/180.0)
+#define APIKey      @"292a7bf1d4b969e26508683f5447a9c0"
+#define AUTONAVI
 
 typedef float mat4f_t[16];	// 4x4 matrix in column major order
 typedef float vec4f_t[4];	// 4D vector
@@ -84,7 +88,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 #pragma mark -
 #pragma mark ARView extension
 
-@interface ARView () {
+@interface ARView () <AMapSearchDelegate,MAMapViewDelegate>
+{
 	UIView *captureView;
 	AVCaptureSession *captureSession;
 	AVCaptureVideoPreviewLayer *captureLayer;
@@ -92,22 +97,28 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	CADisplayLink *displayLink;
 	CMMotionManager *motionManager;
 	CLLocationManager *locationManager;
+#ifndef AUTONAVI
 	CLLocation *location;
+#endif
 	NSArray *placesOfInterest;
 	mat4f_t projectionTransform;
 	mat4f_t cameraTransform;	
 	vec4f_t *placesOfInterestCoordinates;
+    
+    MAMapView *mapView;
+    AMapSearchAPI *search;
+    CLLocation *currentLocation;
 }
-
-@property (nonatomic, strong) CLLocation *locationGaode;
 
 - (void)initialize;
 
 - (void)startCameraPreview;
 - (void)stopCameraPreview;
 
+#ifndef AUTONAVI
 - (void)startLocation;
 - (void)stopLocation;
+#endif
 
 - (void)startDeviceMotion;
 - (void)stopDeviceMotion;
@@ -118,19 +129,54 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 - (void)updatePlacesOfInterestCoordinates;
 
 - (void)onDisplayLink:(id)sender;
+#ifndef AUTONAVI
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation;
-
+#endif
 @end
 
+
+
+
+
+
+@implementation ARView
+
+#pragma mark - AutoNavi & Adi's map api
+
+
+- (void)initMapView
+{
+    [MAMapServices sharedServices].apiKey = APIKey;
+    mapView = [[MAMapView alloc] init];
+    
+    mapView.delegate = self;
+    
+    //[self.view addSubview:_mapView];
+    
+    mapView.showsUserLocation = YES;
+}
+
+- (void)initSearch
+{
+    //MAMapServices is the root of other GaoDe Services? try delete it 2014-12-13
+    [MAMapServices sharedServices].apiKey = APIKey;
+    search = [[AMapSearchAPI alloc] initWithSearchKey:APIKey Delegate:self];
+}
+
+- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation
+{
+//    NSLog(@"userLocation: %@", userLocation.location);
+    currentLocation = [userLocation.location copy];
+    NSLog(@"curLocation: %@", currentLocation);
+//    NSLog(@"ARViewlocation: %@", location);
+    if (placesOfInterest != nil) {
+        [self updatePlacesOfInterestCoordinates];
+    }
+}
 
 #pragma mark -
 #pragma mark ARView implementation
 
-@implementation ARView
-
-- (void)getCurrentLocationFromGaode:(CLLocation *)currentLocation
-{
-}
 
 @dynamic placesOfInterest;
 
@@ -146,7 +192,11 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 - (void)start
 {
 	[self startCameraPreview];
+#ifndef AUTONAVI
 	[self startLocation];
+#endif
+    [self initMapView];
+    [self initSearch];
 	[self startDeviceMotion];
 	[self startDisplayLink];
 }
@@ -154,7 +204,9 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 - (void)stop
 {
 	[self stopCameraPreview];
+#ifndef AUTONAVI
 	[self stopLocation];
+#endif
 	[self stopDeviceMotion];
 	[self stopDisplayLink];
 }
@@ -167,7 +219,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	
 	placesOfInterest = pois;
 //    location = userLocation;
-	if (location != nil) {
+	if (currentLocation != nil) {
         [self updatePlacesOfInterestCoordinates];
 	}
 }
@@ -179,7 +231,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 
 - (void)initialize
 {
-    NSLog(@"ARView before: %@", self);
+//    NSLog(@"ARView before: %@", self);
 	captureView = [[UIView alloc] initWithFrame:self.bounds];
 	captureView.bounds = self.bounds;
 	[self addSubview:captureView];
@@ -187,7 +239,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	
 	// Initialize projection matrix	
 	createProjectionMatrix(projectionTransform, 60.0f*DEGREES_TO_RADIANS, self.bounds.size.width*1.0f / self.bounds.size.height, 0.25f, 1000.0f);
-    NSLog(@"ARView after: %@", self);
+//    NSLog(@"ARView after: %@", self);
 }
 
 - (void)startCameraPreview
@@ -226,6 +278,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	captureLayer = nil;
 }
 
+#ifndef AUTONAVI
 - (void)startLocation
 {
 	locationManager = [[CLLocationManager alloc] init];
@@ -243,6 +296,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	locationManager = nil;
 }
 
+#endif
 - (void)startDeviceMotion
 {	
 	motionManager = [[CMMotionManager alloc] init];
@@ -276,6 +330,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	displayLink = nil;		
 }
 
+#warning This is static test userLocation coordinate, should replace with realtime data.
 #define LATITUDE_GAODE      36.67825978
 #define LONGTITUDE_GAODE    117.05896659
 
@@ -293,8 +348,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 //	location = self.locationGaode;
     
 	double myX, myY, myZ;
-//	latLonToEcef(location.coordinate.latitude, location.coordinate.longitude, 0.0, &myX, &myY, &myZ);
-    latLonToEcef(LATITUDE_GAODE, LONGTITUDE_GAODE, 0.0, &myX, &myY, &myZ);
+	latLonToEcef(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, 0.0, &myX, &myY, &myZ);
+//    latLonToEcef(LATITUDE_GAODE, LONGTITUDE_GAODE, 0.0, &myX, &myY, &myZ);
 
 	// Array of NSData instances, each of which contains a struct with the distance to a POI and the
 	// POI's index into placesOfInterest
@@ -310,7 +365,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 		double poiX, poiY, poiZ, e, n, u;
 		
 		latLonToEcef(poi.location.coordinate.latitude, poi.location.coordinate.longitude, 0.0, &poiX, &poiY, &poiZ);
-		//ecefToEnu(location.coordinate.latitude, location.coordinate.longitude, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
+		ecefToEnu(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
         ecefToEnu(LATITUDE_GAODE, LONGTITUDE_GAODE, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
 		
 		placesOfInterestCoordinates[i][0] = (float)n;
@@ -382,7 +437,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	}
 
 }
-
+#ifndef AUTONAVI
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
 //    location = currentLocation;
@@ -393,6 +448,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 		[self updatePlacesOfInterestCoordinates];
 	}	
 }
+#endif
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -413,6 +469,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 }
 
 @end
+
 
 #pragma mark -
 #pragma mark Math utilities definition

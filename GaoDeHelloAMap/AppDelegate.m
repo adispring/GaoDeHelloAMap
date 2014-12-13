@@ -24,7 +24,7 @@
     // Override point for customization after application launch.
 #ifdef START_FROM_XIB
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    NSLog(@"_window: %@",_window);
+//    NSLog(@"_window: %@",_window);
 #ifdef IPHONE_XIB
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         _viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
