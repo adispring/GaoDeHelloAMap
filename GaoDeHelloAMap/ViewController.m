@@ -31,7 +31,7 @@ UITableViewDataSource, UITableViewDelegate>
     
 }
 @property (nonatomic, strong) NSTimer *paintingTimer;
-@property (nonatomic, strong) NSTimer *GeoTimer;
+//@property (nonatomic, strong) NSTimer *GeoTimer;
 @end
 
 @implementation ViewController
@@ -183,24 +183,27 @@ UITableViewDataSource, UITableViewDelegate>
 
 -(void)onPlaceSearchDone:(AMapPlaceSearchRequest *)request response:(AMapPlaceSearchResponse *)response
 {
-    NSLog(@"request: %@", request);
-    NSLog(@"response: %@", response);
+//    NSLog(@"request: %@", request);
+//    NSLog(@"response: %@", response);
+#ifndef TEST
     ARView *arView = (ARView *)self.view;
     if (response.pois.count > 0) {
-        
+
         _pois = response.pois;
-        [_tableView reloadData];
+ //       [_tableView reloadData];
         NSMutableArray *placesOfInterest = [NSMutableArray array];
 
         for (AMapPOI *poigd in _pois) {
+
             UILabel *label = [[UILabel alloc] init];
             label.adjustsFontSizeToFitWidth = NO;
+            label.hidden = YES;
             label.opaque = NO;
             label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.5f];
             label.center = CGPointMake(200.0f, 200.0f);
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [UIColor whiteColor];
-            label.text = poigd.name;
+            label.text = poigd.name;//[NSString stringWithFormat:@"%@:%ldM",poigd.name,(long)poigd.distance];//poigd.name;
 //            CGSize size = [label.text sizeWithFont:label.font];
             CGSize size = [label.text sizeWithAttributes:@ {NSFontAttributeName: label.font}];
             label.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
@@ -209,13 +212,60 @@ UITableViewDataSource, UITableViewDelegate>
             [placesOfInterest addObject:poi];
         }
         [arView setPlacesOfInterest:placesOfInterest];
+        //       [_mapView removeAnnotation:(id)_annotations];
+        //       [_annotations removeAllObjects];
+    }
+#else
+        ARView *arView = (ARView *)self.view;
+        
+        // Create array of hard-coded places-of-interest, in this case some famous parks
+        const char *poiNames[] = {"Jinan Railway Station JN",
+#ifdef TEST
+            "QingDao Railway Station QD",
+            "H",
+            "Hyde Park UK",
+            "Mont Royal QC",
+            "Retiro Park ES"
+#endif
+        };
+    
+        CLLocationCoordinate2D poiCoords[] = {{36.6712, 116.99089000000004},
+#ifdef TEST
+            {36.06547, 117.056056},
+            {36.6712, 116.99089000000004},
+            {51.5068670, -0.1708030},
+            {45.5126399, -73.6802448},
+            {40.4152519, -3.6887466}
+#endif
+        };
+        
+        int numPois = sizeof(poiCoords) / sizeof(CLLocationCoordinate2D);
+        
+        NSMutableArray *placesOfInterest = [NSMutableArray arrayWithCapacity:numPois];
+        for (int i = 0; i < numPois; i++) {
+            UILabel *label = [[UILabel alloc] init];
+            label.adjustsFontSizeToFitWidth = NO;
+            label.opaque = NO;
+            label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.5f];
+            label.center = CGPointMake(200.0f, 200.0f);
+            label.textAlignment = NSTextAlignmentCenter;
+            label.textColor = [UIColor whiteColor];
+            label.text = [NSString stringWithCString:poiNames[i] encoding:NSASCIIStringEncoding];
+            //        CGSize size = [label.text sizeWithFont:label.font];
+            CGSize size = [label.text sizeWithAttributes:@ {NSFontAttributeName: label.font}];
+            label.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
+            
+            PlaceOfInterest *poi = [PlaceOfInterest placeOfInterestWithView:label at:[[CLLocation alloc] initWithLatitude:poiCoords[i].latitude longitude:poiCoords[i].longitude]];
+            [placesOfInterest insertObject:poi atIndex:i];
+        }
+        [arView setPlacesOfInterest:placesOfInterest];
+#endif
+        
         
 //        NSLog(@"_currentLocation: %@",_currentLocation);
 
         //清空标注
-        [_mapView removeAnnotation:(id)_annotations];
-        [_annotations removeAllObjects];
-    }
+ 
 }
 
 #pragma mark - map delegate
@@ -248,13 +298,9 @@ UITableViewDataSource, UITableViewDelegate>
 - (void) startTimer{
     
     // 定义一个NSTimer
-    self.paintingTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
+    self.paintingTimer = [NSTimer scheduledTimerWithTimeInterval:0.4
                                                           target:self
                                                         selector:@selector(searchAction)  userInfo:nil
-                                                         repeats:YES];
-    self.GeoTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                          target:self
-                                                        selector:@selector(reGeoAction)  userInfo:nil
                                                          repeats:YES];
 }
 
@@ -263,10 +309,6 @@ UITableViewDataSource, UITableViewDelegate>
     if (self.paintingTimer != nil){
         // 定时器调用invalidate后，就会自动执行release方法。不需要在显示的调用release方法
         [self.paintingTimer invalidate];
-    }
-    if (self.GeoTimer != nil){
-        // 定时器调用invalidate后，就会自动执行release方法。不需要在显示的调用release方法
-        [self.GeoTimer invalidate];
     }
     
 }
@@ -280,24 +322,27 @@ UITableViewDataSource, UITableViewDelegate>
     [self initMapView];
     [self initSearch];
     [self initControls];
-    [self initTableView];
+//    [self initTableView];
     [self initAttributes];
     
     [self reGeoAction];
-    
+    [self searchAction];
+
+#ifdef COORDINATE_TEST
     ARView *arView = (ARView *)self.view;
     
     // Create array of hard-coded places-of-interest, in this case some famous parks
     const char *poiNames[] = {"Jinan Railway Station JN",
         "QingDao Railway Station QD",
-        "韩釜宫（济南店）",
+        "HUANGJIA ZHUTI CANTING SHANDABEILU",
         "Hyde Park UK",
         "Mont Royal QC",
         "Retiro Park ES"};
     
     CLLocationCoordinate2D poiCoords[] = {{36.6712, 116.99089000000004},
         {36.06547, 117.056056},
-        {36.679906, 117.056056},
+//        {36.679906, 117.056056},
+        {36.679618, 117.060371},
         {51.5068670, -0.1708030},
         {45.5126399, -73.6802448},
         {40.4152519, -3.6887466}};
@@ -322,7 +367,7 @@ UITableViewDataSource, UITableViewDelegate>
         [placesOfInterest insertObject:poi atIndex:i];
     }
     [arView setPlacesOfInterest:placesOfInterest];
-    
+#endif
  //   NSLog(@"_currentLocation: %@",_currentLocation);
 
 }

@@ -166,12 +166,15 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation
 {
 //    NSLog(@"userLocation: %@", userLocation.location);
-    currentLocation = [userLocation.location copy];
-    NSLog(@"curLocation: %@", currentLocation);
-//    NSLog(@"ARViewlocation: %@", location);
-    if (placesOfInterest != nil) {
-        [self updatePlacesOfInterestCoordinates];
+    if (updatingLocation == true) {
+        currentLocation = [userLocation.location copy];
+        NSLog(@"curLocation: %@", currentLocation);
+        //    NSLog(@"ARViewlocation: %@", location);
+        if (placesOfInterest != nil) {
+            [self updatePlacesOfInterestCoordinates];
+        }
     }
+
 }
 
 #pragma mark -
@@ -239,7 +242,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	
 	// Initialize projection matrix	
 	createProjectionMatrix(projectionTransform, 60.0f*DEGREES_TO_RADIANS, self.bounds.size.width*1.0f / self.bounds.size.height, 0.25f, 1000.0f);
-//    NSLog(@"ARView after: %@", self);
+    NSLog(@"ARView after: %@", self);
 }
 
 - (void)startCameraPreview
@@ -330,7 +333,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	displayLink = nil;		
 }
 
-#warning This is static test userLocation coordinate, should replace with realtime data.
+//#warning This is static test userLocation coordinate, should replace with realtime data.
 #define LATITUDE_GAODE      36.67825978
 #define LONGTITUDE_GAODE    117.05896659
 
@@ -344,12 +347,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 			
 	int i = 0;
     
-//    location = location_gd;
-//	location = self.locationGaode;
-    
 	double myX, myY, myZ;
 	latLonToEcef(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, 0.0, &myX, &myY, &myZ);
-//    latLonToEcef(LATITUDE_GAODE, LONGTITUDE_GAODE, 0.0, &myX, &myY, &myZ);
 
 	// Array of NSData instances, each of which contains a struct with the distance to a POI and the
 	// POI's index into placesOfInterest
@@ -366,7 +365,6 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 		
 		latLonToEcef(poi.location.coordinate.latitude, poi.location.coordinate.longitude, 0.0, &poiX, &poiY, &poiZ);
 		ecefToEnu(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
-        ecefToEnu(LATITUDE_GAODE, LONGTITUDE_GAODE, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
 		
 		placesOfInterestCoordinates[i][0] = (float)n;
 		placesOfInterestCoordinates[i][1]= -(float)e;
@@ -379,6 +377,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 		distanceAndIndex.index = i;
 		[orderedDistances insertObject:[NSData dataWithBytes:&distanceAndIndex length:sizeof(distanceAndIndex)] atIndex:i++];
 	}
+
 	
 	// Sort orderedDistances in ascending order based on distance from the user
 	[orderedDistances sortUsingComparator:(NSComparator)^(NSData *a, NSData *b) {
@@ -392,13 +391,12 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 			return NSOrderedSame;
 		}
 	}];
-	
 	// Add subviews in descending Z-order so they overlap properly
 	for (NSData *d in [orderedDistances reverseObjectEnumerator]) {
 		const DistanceAndIndex *distanceAndIndex = (const DistanceAndIndex *)d.bytes;
 		PlaceOfInterest *poi = (PlaceOfInterest *)[placesOfInterest objectAtIndex:distanceAndIndex->index];		
 		[self addSubview:poi.view];
-	}	
+	}
 }
 
 - (void)onDisplayLink:(id)sender
@@ -423,6 +421,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	int i = 0;
 	for (PlaceOfInterest *poi in [placesOfInterest objectEnumerator]) {
 		vec4f_t v;
+        NSLog(@"poi.view: %@",poi.view);
 		multiplyMatrixAndVector(v, projectionCameraTransform, placesOfInterestCoordinates[i]);
 		
 		float x = (v[0] / v[3] + 1.0f) * 0.5f;
