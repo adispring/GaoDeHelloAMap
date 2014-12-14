@@ -19,7 +19,7 @@
 UITableViewDataSource, UITableViewDelegate>
 {
     MAMapView *_mapView;
-    ARView *_arView;
+//    ARView *arView;
     AMapSearchAPI *_search;
     CLLocation *_currentLocation;
     UIButton *_locationButton;
@@ -149,12 +149,17 @@ UITableViewDataSource, UITableViewDelegate>
         NSLog(@"search failed");
         return;
     }
+    static BOOL hotelOrHome = true;
+//    hotelOrHome = !hotelOrHome;
     
     AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
     request.searchType = AMapSearchType_PlaceAround;
     request.location = [AMapGeoPoint locationWithLatitude:_currentLocation.coordinate.latitude longitude:_currentLocation.coordinate.longitude];
-    
-    request.keywords = @"餐饮";
+    if (hotelOrHome == true) {
+        request.keywords = @"餐饮";
+    }
+    else
+        request.keywords = @"酒店";
     
     [_search AMapPlaceSearch:request];
 }
@@ -183,12 +188,12 @@ UITableViewDataSource, UITableViewDelegate>
 
 -(void)onPlaceSearchDone:(AMapPlaceSearchRequest *)request response:(AMapPlaceSearchResponse *)response
 {
-//    NSLog(@"request: %@", request);
+    NSLog(@"request: %@", request);
 //    NSLog(@"response: %@", response);
 #ifndef TEST
-    ARView *arView = (ARView *)self.view;
-    if (response.pois.count > 0) {
 
+    if (response.pois.count > 0) {
+        ARView *arView = (ARView *)self.view;
         _pois = response.pois;
  //       [_tableView reloadData];
         NSMutableArray *placesOfInterest = [NSMutableArray array];
@@ -200,6 +205,7 @@ UITableViewDataSource, UITableViewDelegate>
             label.hidden = YES;
             label.opaque = NO;
             label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.5f];
+            
             label.center = CGPointMake(200.0f, 200.0f);
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [UIColor whiteColor];
@@ -298,7 +304,8 @@ UITableViewDataSource, UITableViewDelegate>
 - (void) startTimer{
     
     // 定义一个NSTimer
-    self.paintingTimer = [NSTimer scheduledTimerWithTimeInterval:0.4
+    NSLog(@"Start Timer.");
+    self.paintingTimer = [NSTimer scheduledTimerWithTimeInterval:2
                                                           target:self
                                                         selector:@selector(searchAction)  userInfo:nil
                                                          repeats:YES];
@@ -371,19 +378,21 @@ UITableViewDataSource, UITableViewDelegate>
  //   NSLog(@"_currentLocation: %@",_currentLocation);
 
 }
-
+#if false
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     ARView *arView = (ARView *)self.view;
     [arView start];
+    [self startTimer];// 开始定时器
+    NSLog(@"viewWillAppear");
     
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self startTimer];// 开始定时器
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -397,7 +406,9 @@ UITableViewDataSource, UITableViewDelegate>
     ARView *arView = (ARView *)self.view;
     [arView stop];
     [self stopTimer];// 开始定时器
+    NSLog(@"viewDidDisappear");
 }
+#endif
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -408,5 +419,24 @@ UITableViewDataSource, UITableViewDelegate>
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)beforeApplicationResignActive
+{
+    ARView *arView = (ARView *)self.view;
+    [arView stop];
+    [self stopTimer];// 开始定时器
+    NSLog(@"beforeApplicationResignActive");
+}
+
+- (void)afterApplicationDidBecomeActive
+{
+    NSLog(@"afterApplicationDidBecomeActive");
+    ARView *arView = (ARView *)self.view;
+    [arView start];
+    [self startTimer];// 开始定时器
+}
+
+
+
 
 @end

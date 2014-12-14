@@ -11,6 +11,8 @@
 
 @interface ViewController : UIViewController
 
-@property (nonatomic, strong) CLLocation *currentLocation;
+//@property (nonatomic, strong) CLLocation *currentLocation;
+- (void)beforeApplicationResignActive;
+- (void)afterApplicationDidBecomeActive;
 
 @end

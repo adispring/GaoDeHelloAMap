@@ -11,6 +11,7 @@
 		C92CAE7D1A3AD84D0049E76D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92CAE7C1A3AD84D0049E76D /* UIKit.framework */; };
 		C92CAE7F1A3AD8560049E76D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92CAE7E1A3AD8560049E76D /* Foundation.framework */; };
 		C92CAE811A3AD86C0049E76D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92CAE801A3AD86C0049E76D /* CoreGraphics.framework */; };
+		C92D57671A3D8451000F50BF /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = C92D57661A3D8451000F50BF /* ReadMe */; };
 		C98174641A39F53700590E96 /* GaoDeHelloAMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C98174631A39F53700590E96 /* GaoDeHelloAMapTests.m */; };
 		C983E5591A3B2B1700E11716 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C983E5491A3B2B1700E11716 /* AppDelegate.m */; };
 		C983E55B1A3B2B1700E11716 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C983E54C1A3B2B1700E11716 /* Default-568h@2x.png */; };
@@ -42,6 +43,7 @@
 		C92CAE7C1A3AD84D0049E76D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C92CAE7E1A3AD8560049E76D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C92CAE801A3AD86C0049E76D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C92D57661A3D8451000F50BF /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
 		C98174441A39F53700590E96 /* GaoDeHelloAMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GaoDeHelloAMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C981745D1A39F53700590E96 /* GaoDeHelloAMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GaoDeHelloAMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98174621A39F53700590E96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		C981743B1A39F53700590E96 = {
 			isa = PBXGroup;
 			children = (
+				C92D57661A3D8451000F50BF /* ReadMe */,
 				C983E5471A3B2B1700E11716 /* GaoDeHelloAMap */,
 				C98174601A39F53700590E96 /* GaoDeHelloAMapTests */,
 				C98174451A39F53700590E96 /* Products */,
@@ -282,6 +285,7 @@
 			files = (
 				C983E5641A3B2B1700E11716 /* search@2x.png in Resources */,
 				C983E55F1A3B2B1700E11716 /* location_yes@2x.png in Resources */,
+				C92D57671A3D8451000F50BF /* ReadMe in Resources */,
 				C983E55C1A3B2B1700E11716 /* Images.xcassets in Resources */,
 				C983E5701A3BF24700E11716 /* Main.storyboard in Resources */,
 				C983E55E1A3B2B1700E11716 /* location_no@2x.png in Resources */,

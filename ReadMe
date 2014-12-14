@@ -1,0 +1,137 @@
+
+AutoNavi's coordinate data' from
+AutoNavi's api'
+- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation
+
+2014-12-14 16:05:16.398 GaoDeHelloAMap[1125:164708] curLocation: <+36.67285999,+117.05872613> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间16:05:16
+
+
+2014-12-14 17:29:41.395 GaoDeHelloAMap[1137:173166] curLocation: <+36.67282298,+117.05866343> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间17:29:41
+2014-12-14 17:29:41.395 GaoDeHelloAMap[1137:173166] curLocation.altitude: 57.538628
+
+
+
+ipad 's raw data from
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+'
+2014-12-14 16:42:13.789 pARk[1131:168492] ipad raw curLocation: <+36.67239019,+117.05271307> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间16:16:41
+2014-12-14 16:42:14.119 pARk[1131:168492] ipad raw curLocation: <+36.67239223,+117.05269869> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间16:42:14
+
+
+
+
+2014-12-14 17:32:28.776 pARk[1143:173738] ipad raw curLocation: <+36.67241831,+117.05261779> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间17:29:50
+2014-12-14 17:32:28.776 pARk[1143:173738] ipad raw curLocation.altitude: 57.538628
+2014-12-14 17:32:29.090 pARk[1143:173738] ipad raw curLocation: <+36.67240872,+117.05259210> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间17:32:29
+2014-12-14 17:32:29.090 pARk[1143:173738] ipad raw curLocation.altitude: 58.519733
+2014-12-14 17:32:33.265 pARk[1143:173738] ipad raw curLocation: <+36.67240872,+117.05259210> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间17:32:33
+2014-12-14 17:32:33.266 pARk[1143:173738] ipad raw curLocation.altitude: 58.519733
+
+
+
+CMAttitude Pitch: 0.022954, Roll: 0.014820, Yaw: 6.076025
+quaternion: w: 0.998595, x: 0.000193, y: 0.000140, z: 0.052999
+r.m11: 0.994382, r.m12: 0.105848, r.m13: -0.000259,
+r.m21: -0.105848, r.m22: 0.994382, r.m23: 0.000401,
+r.m31: 0.000300, r.m32: -0.000371, r.m33: 1.000000
+2014-12-14 20:42:13.913 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 39.023217, Roll: -2.918865, Yaw: 7.156622
+2014-12-14 20:42:13.914 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.940962, x: 0.334737, y: -0.003121, z: 0.050319
+2014-12-14 20:42:13.914 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994916, r.m12: 0.092608, r.m13: 0.039561,              r.m21: -0.096787, r.m22: 0.770838, r.m23: 0.629635,              r.m31: 0.027814, r.m32: -0.630263, r.m33: 0.775883
+2014-12-14 20:42:13.930 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 39.081135, Roll: -2.873740, Yaw: 7.191925
+2014-12-14 20:42:13.931 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.940780, x: 0.335193, y: -0.002613, z: 0.050719
+2014-12-14 20:42:13.931 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994842, r.m12: 0.093678, r.m13: 0.038918,              r.m21: -0.097182, r.m22: 0.770147, r.m23: 0.630420,              r.m31: 0.029084, r.m32: -0.630950, r.m33: 0.775278
+2014-12-14 20:42:13.946 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 39.151572, Roll: -2.816339, Yaw: 7.213947
+2014-12-14 20:42:13.947 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.940567, x: 0.335745, y: -0.002036, z: 0.051040
+2014-12-14 20:42:13.947 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994781, r.m12: 0.094646, r.m13: 0.038103,              r.m21: -0.097381, r.m22: 0.769340, r.m23: 0.631374,              r.m31: 0.030443, r.m32: -0.631790, r.m33: 0.774542
+2014-12-14 20:42:13.963 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 39.211937, Roll: -2.747343, Yaw: 7.221573
+2014-12-14 20:42:13.963 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.940389, x: 0.336210, y: -0.001412, z: 0.051282
+2014-12-14 20:42:13.964 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994736, r.m12: 0.095501, r.m13: 0.037138,              r.m21: -0.097399, r.m22: 0.768667, r.m23: 0.632191,              r.m31: 0.031828, r.m32: -0.632480, r.m33: 0.773922
+2014-12-14 20:42:13.983 GaoDeHelloAMap[1158:190937] curLocation: <+36.67284015,+117.05855230> +/- 65.00m (speed -1.00 mps / course -1.00) @ 14/12/14 中国标准时间20:42:13
+2014-12-14 20:42:13.983 GaoDeHelloAMap[1158:190937] curLocation.altitude: 58.540756
+2014-12-14 20:42:13.985 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 39.233452, Roll: -2.686650, Yaw: 7.233874
+2014-12-14 20:42:13.985 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.940321, x: 0.336359, y: -0.000865, z: 0.051553
+2014-12-14 20:42:13.985 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994683, r.m12: 0.096371, r.m13: 0.036307,              r.m21: -0.097534, r.m22: 0.768410, r.m23: 0.632482,              r.m31: 0.033054, r.m32: -0.632660, r.m33: 0.773724
+2014-12-14 20:42:13.997 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 39.227788, Roll: -2.649809, Yaw: 7.254830
+2014-12-14 20:42:13.997 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.940329, x: 0.336296, y: -0.000504, z: 0.051835
+2014-12-14 20:42:13.997 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994626, r.m12: 0.097145, r.m13: 0.035813,              r.m21: -0.097823, r.m22: 0.768436, r.m23: 0.632405,              r.m31: 0.033915, r.m32: -0.632510, r.m33: 0.773810
+2014-12-14 20:42:14.014 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 38.949983, Roll: -2.713175, Yaw: 7.314135
+2014-12-14 20:42:14.014 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.941107, x: 0.334047, y: -0.001015, z: 0.052241
+2014-12-14 20:42:14.014 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994540, r.m12: 0.097651, r.m13: 0.036813,              r.m21: -0.099008, r.m22: 0.771367, r.m23: 0.628642,              r.m31: 0.032991, r.m32: -0.628854, r.m33: 0.776823
+2014-12-14 20:42:14.031 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 38.616796, Roll: -2.812395, Yaw: 7.367416
+2014-12-14 20:42:14.031 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.942040, x: 0.331358, y: -0.001875, z: 0.052519
+2014-12-14 20:42:14.031 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994476, r.m12: 0.097708, r.m13: 0.038337,              r.m21: -0.100192, r.m22: 0.774887, r.m23: 0.624109,              r.m31: 0.031273, r.m32: -0.624502, r.m33: 0.780396
+2014-12-14 20:42:14.047 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 38.548377, Roll: -2.844951, Yaw: 7.355229
+2014-12-14 20:42:14.047 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.942241, x: 0.330811, y: -0.002218, z: 0.052351
+2014-12-14 20:42:14.047 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994509, r.m12: 0.097187, r.m13: 0.038817,              r.m21: -0.100123, r.m22: 0.775647, r.m23: 0.623175,              r.m31: 0.030456, r.m32: -0.623640, r.m33: 0.781118
+2014-12-14 20:42:14.063 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 38.524547, Roll: -2.871953, Yaw: 7.335511
+2014-12-14 20:42:14.063 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.942318, x: 0.330627, y: -0.002512, z: 0.052120
+2014-12-14 20:42:14.064 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994554, r.m12: 0.096567, r.m13: 0.039198,              r.m21: -0.099889, r.m22: 0.775938, r.m23: 0.622850,              r.m31: 0.029731, r.m32: -0.623374, r.m33: 0.781359
+2014-12-14 20:42:14.081 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 38.427427, Roll: -2.940374, Yaw: 7.352141
+2014-12-14 20:42:14.082 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.942586, x: 0.329861, y: -0.003085, z: 0.052098
+2014-12-14 20:42:14.082 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994553, r.m12: 0.096179, r.m13: 0.040186,              r.m21: -0.100249, r.m22: 0.776955, r.m23: 0.621523,              r.m31: 0.028555, r.m32: -0.622166, r.m33: 0.782365
+2014-12-14 20:42:14.098 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 38.292282, Roll: -2.999315, Yaw: 7.358663
+2014-12-14 20:42:14.098 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.942966, x: 0.328777, y: -0.003632, z: 0.052036
+2014-12-14 20:42:14.098 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994558, r.m12: 0.095748, r.m13: 0.041067,              r.m21: -0.100525, r.m22: 0.778396, r.m23: 0.619673,              r.m31: 0.027366, r.m32: -0.620429, r.m33: 0.783785
+2014-12-14 20:42:14.120 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 37.962149, Roll: -3.154090, Yaw: 7.359148
+2014-12-14 20:42:14.120 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.943894, x: 0.326133, y: -0.005105, z: 0.051731
+2014-12-14 20:42:14.121 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994596, r.m12: 0.094327, r.m13: 0.043380,              r.m21: -0.100987, r.m22: 0.781923, r.m23: 0.615141,              r.m31: 0.024105, r.m32: -0.616197, r.m33: 0.787223
+2014-12-14 20:42:14.130 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 37.962149, Roll: -3.154090, Yaw: 7.359148
+2014-12-14 20:42:14.130 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.943894, x: 0.326133, y: -0.005105, z: 0.051731
+2014-12-14 20:42:14.130 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994596, r.m12: 0.094327, r.m13: 0.043380,              r.m21: -0.100987, r.m22: 0.781923, r.m23: 0.615141,              r.m31: 0.024105, r.m32: -0.616197, r.m33: 0.787223
+2014-12-14 20:42:14.146 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 37.766343, Roll: -3.202626, Yaw: 7.325059
+2014-12-14 20:42:14.147 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.944457, x: 0.324541, y: -0.005721, z: 0.051393
+2014-12-14 20:42:14.147 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994652, r.m12: 0.093363, r.m13: 0.044164,              r.m21: -0.100789, r.m22: 0.784063, r.m23: 0.612443,              r.m31: 0.022552, r.m32: -0.613619, r.m33: 0.789280
+2014-12-14 20:42:14.174 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 37.294689, Roll: -3.353383, Yaw: 7.286398
+2014-12-14 20:42:14.174 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.945779, x: 0.320721, y: -0.007359, z: 0.050845
+2014-12-14 20:42:14.176 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994721, r.m12: 0.091456, r.m13: 0.046534,              r.m21: -0.100896, r.m22: 0.789105, r.m23: 0.605915,              r.m31: 0.018694, r.m32: -0.607411, r.m33: 0.794168
+2014-12-14 20:42:14.183 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 37.009657, Roll: -3.398075, Yaw: 7.247507
+2014-12-14 20:42:14.183 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.946580, x: 0.318388, y: -0.008009, z: 0.050519
+2014-12-14 20:42:14.184 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994767, r.m12: 0.090540, r.m13: 0.047331,              r.m21: -0.100740, r.m22: 0.792154, r.m23: 0.601950,              r.m31: 0.017007, r.m32: -0.603568, r.m33: 0.797130
+2014-12-14 20:42:14.198 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 37.009657, Roll: -3.398075, Yaw: 7.247507
+2014-12-14 20:42:14.198 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.946580, x: 0.318388, y: -0.008009, z: 0.050519
+2014-12-14 20:42:14.199 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994767, r.m12: 0.090540, r.m13: 0.047331,              r.m21: -0.100740, r.m22: 0.792154, r.m23: 0.601950,              r.m31: 0.017007, r.m32: -0.603568, r.m33: 0.797130
+2014-12-14 20:42:14.215 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 36.408874, Roll: -3.449038, Yaw: 7.170063
+2014-12-14 20:42:14.215 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.948247, x: 0.313443, y: -0.009006, z: 0.049990
+2014-12-14 20:42:14.215 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994840, r.m12: 0.089160, r.m13: 0.048417,              r.m21: -0.100451, r.m22: 0.798508, r.m23: 0.593544,              r.m31: 0.014259, r.m32: -0.595344, r.m33: 0.803344
+2014-12-14 20:42:14.230 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 36.408874, Roll: -3.449038, Yaw: 7.170063
+2014-12-14 20:42:14.230 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.948247, x: 0.313443, y: -0.009006, z: 0.049990
+2014-12-14 20:42:14.230 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994840, r.m12: 0.089160, r.m13: 0.048417,              r.m21: -0.100451, r.m22: 0.798508, r.m23: 0.593544,              r.m31: 0.014259, r.m32: -0.595344, r.m33: 0.803344
+2014-12-14 20:42:14.247 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 35.754964, Roll: -3.387629, Yaw: 7.115511
+2014-12-14 20:42:14.248 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.950029, x: 0.308003, y: -0.009036, z: 0.049976
+2014-12-14 20:42:14.248 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994842, r.m12: 0.089392, r.m13: 0.047954,              r.m21: -0.100523, r.m22: 0.805273, r.m23: 0.584320,              r.m31: 0.013618, r.m32: -0.586126, r.m33: 0.810105
+2014-12-14 20:42:14.263 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 35.754964, Roll: -3.387629, Yaw: 7.115511
+2014-12-14 20:42:14.264 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.950029, x: 0.308003, y: -0.009036, z: 0.049976
+2014-12-14 20:42:14.264 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994842, r.m12: 0.089392, r.m13: 0.047954,              r.m21: -0.100523, r.m22: 0.805273, r.m23: 0.584320,              r.m31: 0.013618, r.m32: -0.586126, r.m33: 0.810105
+2014-12-14 20:42:14.280 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 35.427465, Roll: -3.264769, Yaw: 7.087628
+2014-12-14 20:42:14.280 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.950917, x: 0.305234, y: -0.008285, z: 0.050207
+2014-12-14 20:42:14.280 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994821, r.m12: 0.090427, r.m13: 0.046406,              r.m21: -0.100542, r.m22: 0.808623, r.m23: 0.579672,              r.m31: 0.014893, r.m32: -0.581336, r.m33: 0.813528
+2014-12-14 20:42:14.297 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 35.067945, Roll: -3.099830, Yaw: 7.068169
+2014-12-14 20:42:14.298 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.951879, x: 0.302178, y: -0.007178, z: 0.050624
+2014-12-14 20:42:14.298 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994771, r.m12: 0.092037, r.m13: 0.044260,              r.m21: -0.100713, r.m22: 0.812251, r.m23: 0.574547,              r.m31: 0.016930, r.m32: -0.576001, r.m33: 0.817274
+2014-12-14 20:42:14.313 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 34.390410, Roll: -2.751397, Yaw: 7.043556
+2014-12-14 20:42:14.313 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.953660, x: 0.296394, y: -0.004737, z: 0.051581
+2014-12-14 20:42:14.314 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994634, r.m12: 0.095574, r.m13: 0.039612,              r.m21: -0.101190, r.m22: 0.818980, r.m23: 0.564829,              r.m31: 0.021541, r.m32: -0.565806, r.m33: 0.824257
+2014-12-14 20:42:14.330 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 34.390410, Roll: -2.751397, Yaw: 7.043556
+2014-12-14 20:42:14.330 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.953660, x: 0.296394, y: -0.004737, z: 0.051581
+2014-12-14 20:42:14.330 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994634, r.m12: 0.095574, r.m13: 0.039612,              r.m21: -0.101190, r.m22: 0.818980, r.m23: 0.564829,              r.m31: 0.021541, r.m32: -0.565806, r.m33: 0.824257
+2014-12-14 20:42:14.347 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 33.732088, Roll: -2.384803, Yaw: 7.013385
+2014-12-14 20:42:14.347 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.955356, x: 0.290747, y: -0.002135, z: 0.052495
+2014-12-14 20:42:14.347 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994479, r.m12: 0.099062, r.m13: 0.034605,              r.m21: -0.101545, r.m22: 0.825421, r.m23: 0.555310,              r.m31: 0.026446, r.m32: -0.555759, r.m33: 0.830923
+2014-12-14 20:42:14.363 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 33.732088, Roll: -2.384803, Yaw: 7.013385
+2014-12-14 20:42:14.363 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.955356, x: 0.290747, y: -0.002135, z: 0.052495
+2014-12-14 20:42:14.364 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994479, r.m12: 0.099062, r.m13: 0.034605,              r.m21: -0.101545, r.m22: 0.825421, r.m23: 0.555310,              r.m31: 0.026446, r.m32: -0.555759, r.m33: 0.830923
+2014-12-14 20:42:14.380 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 33.404348, Roll: -2.223736, Yaw: 7.018957
+2014-12-14 20:42:14.380 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.956177, x: 0.287942, y: -0.000962, z: 0.053054
+2014-12-14 20:42:14.380 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994369, r.m12: 0.100904, r.m13: 0.032392,              r.m21: -0.102011, r.m22: 0.828550, r.m23: 0.550544,              r.m31: 0.028714, r.m32: -0.550748, r.m33: 0.834177
+2014-12-14 20:42:14.398 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 32.668556, Roll: -1.912911, Yaw: 7.047165
+2014-12-14 20:42:14.398 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.957978, x: 0.281655, y: 0.001294, z: 0.054285
+2014-12-14 20:42:14.398 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.994103, r.m12: 0.104736, r.m13: 0.028100,              r.m21: -0.103278, r.m22: 0.835448, r.m23: 0.539778,              r.m31: 0.033058, r.m32: -0.539497, r.m33: 0.841338
+2014-12-14 20:42:14.413 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 32.269590, Roll: -1.767288, Yaw: 7.055049
+2014-12-14 20:42:14.414 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.958940, x: 0.278250, y: 0.002310, z: 0.054820
+2014-12-14 20:42:14.414 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.993979, r.m12: 0.106424, r.m13: 0.026077,              r.m21: -0.103852, r.m22: 0.839143, r.m23: 0.533904,              r.m31: 0.034938, r.m32: -0.533397, r.m33: 0.845143
+2014-12-14 20:42:14.432 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 31.996446, Roll: -1.611080, Yaw: 7.052101
+2014-12-14 20:42:14.433 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.959594, x: 0.275890, y: 0.003460, z: 0.055247
+2014-12-14 20:42:14.433 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.993872, r.m12: 0.107939, r.m13: 0.023844,              r.m21: -0.104120, r.m22: 0.841665, r.m23: 0.529867,              r.m31: 0.037125, r.m32: -0.529102, r.m33: 0.847746
+2014-12-14 20:42:14.446 GaoDeHelloAMap[1158:190937] motionManager.attitude: CMAttitude Pitch: 31.740599, Roll: -1.427790, Yaw: 7.051230
+2014-12-14 20:42:14.447 GaoDeHelloAMap[1158:190937] motionManager.quaternion: w: 0.960198, x: 0.273659, y: 0.004853, z: 0.055745
+2014-12-14 20:42:14.447 GaoDeHelloAMap[1158:190937] CMRotationMatrix:               r.m11: 0.993738, r.m12: 0.109710, r.m13: 0.021190,              r.m21: -0.104397, r.m22: 0.844006, r.m23: 0.526074,              r.m31: 0.039831, r.m32: -0.524992, r.m33: 0.850174

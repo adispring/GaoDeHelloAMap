@@ -168,7 +168,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 //    NSLog(@"userLocation: %@", userLocation.location);
     if (updatingLocation == true) {
         currentLocation = [userLocation.location copy];
-        NSLog(@"curLocation: %@", currentLocation);
+//        NSLog(@"curLocation: %@", currentLocation);
+//        NSLog(@"curLocation.altitude: %f", currentLocation.altitude);
         //    NSLog(@"ARViewlocation: %@", location);
         if (placesOfInterest != nil) {
             [self updatePlacesOfInterestCoordinates];
@@ -339,7 +340,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 
 - (void)updatePlacesOfInterestCoordinates
 {
-	
+    NSLog(@"updatePlacesOfInterestCoordinates");
 	if (placesOfInterestCoordinates != NULL) {
 		free(placesOfInterestCoordinates);
 	}
@@ -348,7 +349,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	int i = 0;
     
 	double myX, myY, myZ;
-	latLonToEcef(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, 0.0, &myX, &myY, &myZ);
+	latLonToEcef(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, currentLocation.altitude, &myX, &myY, &myZ);
 
 	// Array of NSData instances, each of which contains a struct with the distance to a POI and the
 	// POI's index into placesOfInterest
@@ -362,8 +363,10 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	// Compute the world coordinates of each place-of-interest
 	for (PlaceOfInterest *poi in [[self placesOfInterest] objectEnumerator]) {
 		double poiX, poiY, poiZ, e, n, u;
-		
-		latLonToEcef(poi.location.coordinate.latitude, poi.location.coordinate.longitude, 0.0, &poiX, &poiY, &poiZ);
+//        NSLog(@"curLocation: %@", currentLocation);
+//        NSLog(@"poi.poi.location.altitude: %f", poi.location.altitude);
+        
+		latLonToEcef(poi.location.coordinate.latitude, poi.location.coordinate.longitude, poi.location.altitude, &poiX, &poiY, &poiZ);
 		ecefToEnu(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, myX, myY, myZ, poiX, poiY, poiZ, &e, &n, &u);
 		
 		placesOfInterestCoordinates[i][0] = (float)n;
@@ -402,8 +405,22 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 - (void)onDisplayLink:(id)sender
 {
 	CMDeviceMotion *d = motionManager.deviceMotion;
+//    NSLog(@"motionManager: %@",motionManager);
 	if (d != nil) {
 		CMRotationMatrix r = d.attitude.rotationMatrix;
+#if false
+        NSLog(@"motionManager.attitude: %@",d.attitude);
+//        NSLog(@")
+        NSLog(@"motionManager.quaternion: w: %f, x: %f, y: %f, z: %f",
+              d.attitude.quaternion.w, d.attitude.quaternion.x, d.attitude.quaternion.y, d.attitude.quaternion.z);
+        NSLog(@"CMRotationMatrix: \
+              r.m11: %f, r.m12: %f, r.m13: %f,\
+              r.m21: %f, r.m22: %f, r.m23: %f,\
+              r.m31: %f, r.m32: %f, r.m33: %f",
+              r.m11,r.m12,r.m13,
+              r.m21,r.m22,r.m23,
+              r.m31,r.m32,r.m33);
+#endif
 		transformFromCMRotationMatrix(cameraTransform, &r);
 		[self setNeedsDisplay];
 	}
@@ -421,7 +438,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	int i = 0;
 	for (PlaceOfInterest *poi in [placesOfInterest objectEnumerator]) {
 		vec4f_t v;
-        NSLog(@"poi.view: %@",poi.view);
+//        NSLog(@"poi.view: %@",poi.view);
 		multiplyMatrixAndVector(v, projectionCameraTransform, placesOfInterestCoordinates[i]);
 		
 		float x = (v[0] / v[3] + 1.0f) * 0.5f;
