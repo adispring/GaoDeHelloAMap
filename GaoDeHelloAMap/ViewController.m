@@ -185,7 +185,7 @@ UITableViewDataSource, UITableViewDelegate>
     _mapView.userLocation.title = title;
     _mapView.userLocation.subtitle = response.regeocode.formattedAddress;
 }
-
+//#define TEST
 -(void)onPlaceSearchDone:(AMapPlaceSearchRequest *)request response:(AMapPlaceSearchResponse *)response
 {
     NSLog(@"request: %@", request);
@@ -209,12 +209,14 @@ UITableViewDataSource, UITableViewDelegate>
             label.center = CGPointMake(200.0f, 200.0f);
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [UIColor whiteColor];
-            label.text = poigd.name;//[NSString stringWithFormat:@"%@:%ldM",poigd.name,(long)poigd.distance];//poigd.name;
+//            label.text = poigd.name;
+            label.text = [NSString stringWithFormat:@"%@:%ldM",poigd.name,(long)poigd.distance];//poigd.name;
 //            CGSize size = [label.text sizeWithFont:label.font];
             CGSize size = [label.text sizeWithAttributes:@ {NSFontAttributeName: label.font}];
             label.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
             
             PlaceOfInterest *poi = [PlaceOfInterest placeOfInterestWithView:label at:[[CLLocation alloc] initWithLatitude:poigd.location.latitude longitude:poigd.location.longitude]];
+//            NSLog(@"poigd.location.longitude: %@",poigd.)
             [placesOfInterest addObject:poi];
         }
         [arView setPlacesOfInterest:placesOfInterest];
