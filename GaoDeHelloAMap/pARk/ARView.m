@@ -57,31 +57,21 @@
 #pragma mark Math utilities declaration
 
 #define DEGREES_TO_RADIANS (M_PI/180.0)
-#define RADIANS_TO_DEGREES (180.0/M_PI)
-
 #define APIKey      @"292a7bf1d4b969e26508683f5447a9c0"
 #define AUTONAVI
-//#define IOS_MATRIX_VECTOR
 
 typedef float mat4f_t[16];	// 4x4 matrix in column major order
 typedef float vec4f_t[4];	// 4D vector
 
-
-
-
 // Creates a projection matrix using the given y-axis field-of-view, aspect ratio, and near and far clipping planes
-void createProjectionMatrixStd(mat4f_t mout, float fovy, float aspect, float zNear, float zFar);
+void createProjectionMatrix(mat4f_t mout, float fovy, float aspect, float zNear, float zFar);
 
 // Matrix-vector and matrix-matricx multiplication routines
-void multiplyMatrixAndVectorStd(vec4f_t vout, const mat4f_t m, const vec4f_t v);
-void multiplyMatrixAndMatrixStd(mat4f_t c, const mat4f_t a, const mat4f_t b);
+void multiplyMatrixAndVector(vec4f_t vout, const mat4f_t m, const vec4f_t v);
+void multiplyMatrixAndMatrix(mat4f_t c, const mat4f_t a, const mat4f_t b);
 
 // Initialize mout to be an affine transform corresponding to the same rotation specified by m
-void transformFromCMRotationMatrixStd(vec4f_t mout, const CMRotationMatrix *m);
-
-//#endif
-
-
+void transformFromCMRotationMatrix(vec4f_t mout, const CMRotationMatrix *m);
 
 #pragma mark -
 #pragma mark Geodetic utilities declaration
@@ -107,8 +97,6 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	CADisplayLink *displayLink;
 	CMMotionManager *motionManager;
 	CLLocationManager *locationManager;
-    double currentYaw;
-    double oldYaw;
 #ifndef AUTONAVI
 	CLLocation *location;
 #endif
@@ -253,13 +241,8 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	[self addSubview:captureView];
 	[self sendSubviewToBack:captureView];
 	
-	// Initialize projection matrix
-//#ifdef
-//	createProjectionMatrix(projectionTransform, 60.0f*DEGREES_TO_RADIANS, self.bounds.size.width*1.0f / self.bounds.size.height, 0.25f, 1000.0f);
-    
-    createProjectionMatrixStd(projectionTransform, 60.0f*DEGREES_TO_RADIANS, self.bounds.size.width*1.0f / self.bounds.size.height,0.25f, 1000.0f);
-
-    
+	// Initialize projection matrix	
+	createProjectionMatrix(projectionTransform, 60.0f*DEGREES_TO_RADIANS, self.bounds.size.width*1.0f / self.bounds.size.height, 0.25f, 1000.0f);
     NSLog(@"ARView after: %@", self);
 }
 
@@ -388,7 +371,7 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 		
 		placesOfInterestCoordinates[i][0] = (float)n;
 		placesOfInterestCoordinates[i][1]= -(float)e;
-		placesOfInterestCoordinates[i][2] = (float)u;//0.0f;
+		placesOfInterestCoordinates[i][2] = 0.0f;
 		placesOfInterestCoordinates[i][3] = 1.0f;
 		
 		// Add struct containing distance and index to orderedDistances
@@ -425,19 +408,20 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 //    NSLog(@"motionManager: %@",motionManager);
 	if (d != nil) {
 		CMRotationMatrix r = d.attitude.rotationMatrix;
-        currentYaw = d.attitude.yaw;
 #if false
         NSLog(@"motionManager.attitude: %@",d.attitude);
 //        NSLog(@")
         NSLog(@"motionManager.quaternion: w: %f, x: %f, y: %f, z: %f",
               d.attitude.quaternion.w, d.attitude.quaternion.x, d.attitude.quaternion.y, d.attitude.quaternion.z);
-        NSLog(@"CMRotationMatrix: \nr.m11: %f, r.m12: %f, r.m13: %f, \nr.m21: %f, r.m22: %f, r.m23: %f, \nr.m31: %f, r.m32: %f, r.m33: %f",
+        NSLog(@"CMRotationMatrix: \
+              r.m11: %f, r.m12: %f, r.m13: %f,\
+              r.m21: %f, r.m22: %f, r.m23: %f,\
+              r.m31: %f, r.m32: %f, r.m33: %f",
               r.m11,r.m12,r.m13,
               r.m21,r.m22,r.m23,
               r.m31,r.m32,r.m33);
 #endif
-
-        transformFromCMRotationMatrixStd(cameraTransform, &r);
+		transformFromCMRotationMatrix(cameraTransform, &r);
 		[self setNeedsDisplay];
 	}
 }
@@ -449,46 +433,22 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 	}
 	
 	mat4f_t projectionCameraTransform;
-
-    multiplyMatrixAndMatrixStd(projectionCameraTransform, projectionTransform, cameraTransform);
-#if false
-    NSLog(@"projectionCameraTransform");
-    for (int i = 0; i<4; i++) {
-        NSLog(@"%f %f %f %f",projectionCameraTransform[i*4],projectionCameraTransform[i*4+1],projectionCameraTransform[i*4+2],projectionCameraTransform[i*4+3]);
-    }
-    
-    NSLog(@"projectionTransform");
-    for (int i = 0; i<4; i++) {
-        NSLog(@"%f %f %f %f",projectionTransform[i*4],projectionTransform[i*4+1],projectionTransform[i*4+2],projectionTransform[i*4+3]);
-    }
-    
-    NSLog(@"projectionTransform");
-    for (int i = 0; i<4; i++) {
-        NSLog(@"%f %f %f %f",cameraTransform[i*4],cameraTransform[i*4+1],cameraTransform[i*4+2],cameraTransform[i*4+3]);
-    }
-#endif
+	multiplyMatrixAndMatrix(projectionCameraTransform, projectionTransform, cameraTransform);
+	
 	int i = 0;
-    static BOOL coYaw = true;
 	for (PlaceOfInterest *poi in [placesOfInterest objectEnumerator]) {
 		vec4f_t v;
 //        NSLog(@"poi.view: %@",poi.view);
-		multiplyMatrixAndVectorStd(v, projectionCameraTransform, placesOfInterestCoordinates[i]);
-//        NSLog(@"v[]: %f, %f, %f, %f", v[0],v[1],v[2],v[3]);
+		multiplyMatrixAndVector(v, projectionCameraTransform, placesOfInterestCoordinates[i]);
 		
 		float x = (v[0] / v[3] + 1.0f) * 0.5f;
 		float y = (v[1] / v[3] + 1.0f) * 0.5f;
 		if (v[2] < 0.0f) {
-//			poi.view.center = CGPointMake(x*self.bounds.size.width, self.bounds.size.height-y*self.bounds.size.height);
-            // because iOS device's origin(0,0) is on the top left of the screen, and the projection coordinate's origin
-            // is at the bottom left of the screen, so we inverse y axis upsidedown, and keep x axis no change.
-            poi.view.center = CGPointMake(x*self.bounds.size.width, self.bounds.size.height-y*self.bounds.size.height);
+			poi.view.center = CGPointMake(x*self.bounds.size.width, self.bounds.size.height-y*self.bounds.size.height);
 			poi.view.hidden = NO;
-            
 		} else {
 			poi.view.hidden = YES;
 		}
-        oldYaw = currentYaw;
-        coYaw = !coYaw;
 		i++;
 	}
 
@@ -527,219 +487,81 @@ void ecefToEnu(double lat, double lon, double x, double y, double z, double xr, 
 @end
 
 
-
-
 #pragma mark -
 #pragma mark Math utilities definition
 
-
-
-
-#pragma mark -
-#pragma mark Math utilities definition STD Version
-
-/*apple's matrix multiplication is vector(1*4)*matrix(4*4),vector in front, and matrix after, This
- looks wierd.
- v[](1x4) = POICoordinate[](1x4) * cameraTransform(4x4) * projectionTransform(4x4);
- v[](1x4) is clip coordinate.
- each of the vector/matrix is a transpose of a standard
- */
-
 // Creates a projection matrix using the given y-axis field-of-view, aspect ratio, and near and far clipping planes
-void createProjectionMatrixStd(mat4f_t mout, float fovy, float aspect, float zNear, float zFar)
+void createProjectionMatrix(mat4f_t mout, float fovy, float aspect, float zNear, float zFar)
 {
-    float f = 1.0f / tanf(fovy/2.0f);
-#ifdef IOS_MATRIX_VECTOR
-
-    
-    mout[0] = f / aspect;
-    mout[1] = 0.0f;
-    mout[2] = 0.0f;
-    mout[3] = 0.0f;
-    
-    mout[4] = 0.0f;
-    mout[5] = f;
-    mout[6] = 0.0f;
-    mout[7] = 0.0f;
-    
-    mout[8] = 0.0f;
-    mout[9] = 0.0f;
-    mout[10] = (zFar+zNear) / (zNear-zFar);
-    mout[11] = -1.0f;
-    
-    mout[12] = 0.0f;
-    mout[13] = 0.0f;
-    mout[14] = 2 * zFar * zNear /  (zNear-zFar);
-    mout[15] = 0.0f;
-#else
-    
-    mout[0] = f / aspect;
-    mout[1] = 0.0f;
-    mout[2] = 0.0f;
-    mout[3] = 0.0f;
-    
-    mout[4] = 0.0f;
-    mout[5] = f;
-    mout[6] = 0.0f;
-    mout[7] = 0.0f;
-    
-    mout[8] = 0.0f;
-    mout[9] = 0.0f;
-    mout[10] = (zFar+zNear) / (zNear-zFar);
-    mout[11] = 2 * zFar * zNear / (zNear-zFar);//-1.0f;
-    
-    mout[12] = 0.0f;
-    mout[13] = 0.0f;
-    mout[14] = -1.0f;//2 * zFar * zNear /  (zNear-zFar);
-    mout[15] = 0.0f;
-#endif
+	float f = 1.0f / tanf(fovy/2.0f);
+	
+	mout[0] = f / aspect;
+	mout[1] = 0.0f;
+	mout[2] = 0.0f;
+	mout[3] = 0.0f;
+	
+	mout[4] = 0.0f;
+	mout[5] = f;
+	mout[6] = 0.0f;
+	mout[7] = 0.0f;
+	
+	mout[8] = 0.0f;
+	mout[9] = 0.0f;
+	mout[10] = (zFar+zNear) / (zNear-zFar);
+	mout[11] = -1.0f;
+	
+	mout[12] = 0.0f;
+	mout[13] = 0.0f;
+	mout[14] = 2 * zFar * zNear /  (zNear-zFar);
+	mout[15] = 0.0f;
 }
-
-
 
 // Matrix-vector and matrix-matricx multiplication routines
-void multiplyMatrixAndVectorStd(vec4f_t vout, const mat4f_t m, const vec4f_t v)
+void multiplyMatrixAndVector(vec4f_t vout, const mat4f_t m, const vec4f_t v)
 {
-#ifdef IOS_MATRIX_VECTOR
-    vout[0] = m[0]*v[0] + m[4]*v[1] + m[8]*v[2] + m[12]*v[3];
-    vout[1] = m[1]*v[0] + m[5]*v[1] + m[9]*v[2] + m[13]*v[3];
-    vout[2] = m[2]*v[0] + m[6]*v[1] + m[10]*v[2] + m[14]*v[3];
-    vout[3] = m[3]*v[0] + m[7]*v[1] + m[11]*v[2] + m[15]*v[3];
-#else
-    vout[0] = m[0]*v[0] + m[1]*v[1] + m[2]*v[2] + m[3]*v[3];
-    vout[1] = m[4]*v[0] + m[5]*v[1] + m[6]*v[2] + m[7]*v[3];
-    vout[2] = m[8]*v[0] + m[9]*v[1] + m[10]*v[2] + m[11]*v[3];
-    vout[3] = m[12]*v[0] + m[13]*v[1] + m[14]*v[2] + m[15]*v[3];
-#endif
+	vout[0] = m[0]*v[0] + m[4]*v[1] + m[8]*v[2] + m[12]*v[3];
+	vout[1] = m[1]*v[0] + m[5]*v[1] + m[9]*v[2] + m[13]*v[3];
+	vout[2] = m[2]*v[0] + m[6]*v[1] + m[10]*v[2] + m[14]*v[3];
+	vout[3] = m[3]*v[0] + m[7]*v[1] + m[11]*v[2] + m[15]*v[3];
 }
 
-void multiplyMatrixAndMatrixStd(mat4f_t c, const mat4f_t a, const mat4f_t b)
+void multiplyMatrixAndMatrix(mat4f_t c, const mat4f_t a, const mat4f_t b)
 {
-    uint8_t col, row, i;
-    memset(c, 0, 16*sizeof(float));
-#ifdef IOS_MATRIX_VECTOR
-    
-    for (col = 0; col < 4; col++) {
-        for (row = 0; row < 4; row++) {
-            for (i = 0; i < 4; i++) {
-                c[col*4+row] += a[i*4+row]*b[col*4+i];
-            }
-        }
-    }
-#else
-    
-    for (row = 0; row < 4; row++) {
-        for (col = 0; col < 4; col++) {
-            for (i = 0; i < 4; i++) {
-                c[row*4+col] += a[row*4+i]*b[col+i*4];//a[i*4+row]*b[col*4+i];
-            }
-        }
-    }
-
-#endif
+	uint8_t col, row, i;
+	memset(c, 0, 16*sizeof(float));
+	
+	for (col = 0; col < 4; col++) {
+		for (row = 0; row < 4; row++) {
+			for (i = 0; i < 4; i++) {
+				c[col*4+row] += a[i*4+row]*b[col*4+i];
+			}
+		}
+	}
 }
 
 // Initialize mout to be an affine transform corresponding to the same rotation specified by m
-void transformFromCMRotationMatrixStd(vec4f_t mout, const CMRotationMatrix *m)
+void transformFromCMRotationMatrix(vec4f_t mout, const CMRotationMatrix *m)
 {
-    /*
-     r.m11: 0.975744, r.m12: -0.218411, r.m13: -0.014855,
-     r.m21: 0.218153, r.m22: 0.975763, r.m23: -0.017207,
-     r.m31: 0.018254, r.m32: 0.013549, r.m33: 0.999742
-     */
-#if false
-#ifdef IOS_MATRIX_VECTOR
-    
-    mout[0] = 0.975744;
-    mout[1] = 0.218153;
-    mout[2] = 0.018254;
-    mout[3] = 0.0f;
-    
-    mout[4] = -0.218411;
-    mout[5] = 0.975763;
-    mout[6] = 0.013549;
-    mout[7] = 0.0f;
-    
-    mout[8] = -0.014855;
-    mout[9] = -0.017207;
-    mout[10] = 0.999742;
-    mout[11] = 0.0f;
-    
-    mout[12] = 0.0f;
-    mout[13] = 0.0f;
-    mout[14] = 0.0f;
-    mout[15] = 1.0f;
-    
-#else
-    
-    mout[0] = 0.975744f;
-    mout[1] = -0.218411;
-    mout[2] = -0.014855;
-    mout[3] = 0.0f;
-    
-    mout[4] = 0.218153;
-    mout[5] = 0.975763;
-    mout[6] = -0.017207;
-    mout[7] = 0.0f;
-    
-    mout[8] = 0.018254;
-    mout[9] = 0.013549;
-    mout[10] = 0.999742;
-    mout[11] = 0.0f;
-    
-    mout[12] = 0.0f;
-    mout[13] = 0.0f;
-    mout[14] = 0.0f;
-    mout[15] = 1.0f;
-#endif
-#endif
-#ifdef IOS_MATRIX_VECTOR
-    mout[0] = (float)m->m11;
-    mout[1] = (float)m->m21;
-    mout[2] = (float)m->m31;
-    mout[3] = 0.0f;
-    
-    mout[4] = (float)m->m12;
-    mout[5] = (float)m->m22;
-    mout[6] = (float)m->m32;
-    mout[7] = 0.0f;
-    
-    mout[8] = (float)m->m13;
-    mout[9] = (float)m->m23;
-    mout[10] = (float)m->m33;
-    mout[11] = 0.0f;
-    
-    mout[12] = 0.0f;
-    mout[13] = 0.0f;
-    mout[14] = 0.0f;
-    mout[15] = 1.0f;
-#else
-    mout[0] = (float)m->m11;
-    mout[1] = (float)m->m12;
-    mout[2] = (float)m->m13;
-    mout[3] = 0.0f;
-    
-    mout[4] = (float)m->m21;
-    mout[5] = (float)m->m22;
-    mout[6] = (float)m->m23;
-    mout[7] = 0.0f;
-    
-    mout[8] = (float)m->m31;
-    mout[9] = (float)m->m32;
-    mout[10] = (float)m->m33;
-    mout[11] = 0.0f;
-    
-    mout[12] = 0.0f;
-    mout[13] = 0.0f;
-    mout[14] = 0.0f;
-    mout[15] = 1.0f;
-    
-
-#endif
-
+	mout[0] = (float)m->m11;
+	mout[1] = (float)m->m21;
+	mout[2] = (float)m->m31;
+	mout[3] = 0.0f;
+	
+	mout[4] = (float)m->m12;
+	mout[5] = (float)m->m22;
+	mout[6] = (float)m->m32;
+	mout[7] = 0.0f;
+	
+	mout[8] = (float)m->m13;
+	mout[9] = (float)m->m23;
+	mout[10] = (float)m->m33;
+	mout[11] = 0.0f;
+	
+	mout[12] = 0.0f;
+	mout[13] = 0.0f;
+	mout[14] = 0.0f;
+	mout[15] = 1.0f;
 }
-
-
 
 #pragma mark -
 #pragma mark Geodetic utilities definition
